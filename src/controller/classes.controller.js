@@ -8,7 +8,7 @@ const crudController = require("./crud.controller")
 
 
 
-router.post("", authenticate, authorise["admin", "teacher"], async (req, res) => {
+router.post("", authenticate, authorise(["admin", "teacher"]), async (req, res) => {
     try {
         const user_id = req.user._id;
         const item = await Classes.create({
@@ -24,8 +24,33 @@ router.post("", authenticate, authorise["admin", "teacher"], async (req, res) =>
     }
 })
 
+router.get("", async (req, res) => {
+	try {
+	  const teacher = await Teacher.find().populate({path: "teacher_id",
+      populate: [
+        { path: "user_id" },
+      ],}).lean().exec();
+  
+	  return res.send(teacher);
+	} catch (err) {
+	  return res.status(500).send({ message: err.message });
+	}
+  });
 
-router.get("", crudController(Classes).getAll);
+  router.get("/:_id", async (req, res) => {
+	try {
+	  const teacher = await Teacher.findbyId(req.params._id).populate({path: "teacher_id",
+      populate: [
+        { path: "user_id" },
+      ],}).lean().exec();
+  
+	  return res.send(teacher);
+	} catch (err) {
+	  return res.status(500).send({ message: err.message });
+	}
+  });
+
+
 router.get("/:id", crudController(Classes).getOne);
 router.patch("/:id", crudController(Classes).updateOne);
 router.delete("/:id", crudController(Classes).deleteOne);

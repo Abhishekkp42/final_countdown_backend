@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const teacherSchema = new mongoose.Schema({
+const teachersSchema = new mongoose.Schema({
 	name: {type: String, required: true},
 	gender: {type: String, required: true},
 	age: {type: Number, required: true},
@@ -15,4 +15,4 @@ const teacherSchema = new mongoose.Schema({
   timestamps: true,
 })
 
-module.exports = mongoose.model("teacher", teacherSchema);
+module.exports = mongoose.model("teachers", teachersSchema);

@@ -4,7 +4,9 @@ const connect= require('./configs/db');
 
 const userController= require('./controller/user.controller');
 
-// const classesController= require('./controller/classes.controller');
+const teacherController = require("./controller/teachers.controller")
+
+const classesController= require('./controller/classes.controller');
 
 const { register, login} = require("./controller/auth.controller")
 
@@ -16,7 +18,8 @@ app.post("/register", register)
 app.post("/login", login)
 
 app.use("/users", userController);
-// app.use("/classes", classesController);
+app.use("/teacher", teacherController)
+app.use("/classes", classesController);
 
 app.listen(2345, async()=>{
     try{

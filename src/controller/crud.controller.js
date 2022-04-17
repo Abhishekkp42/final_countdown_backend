@@ -1,17 +1,17 @@
-const post = (model) =>async(req,res)=> {
-    try {
-        const user_id = req.user._id;
-        const item = await model.create({
-            title: req.body.title,
-            price: req.body.price,
-            user_id
-        });
-        return res.status(200).send(item)
+// const post = (model) =>async(req,res)=> {
+//     try {
+//         const user_id = req.user._id;
+//         const item = await model.create({
+//             title: req.body.title,
+//             price: req.body.price,
+//             user_id
+//         });
+//         return res.status(200).send(item)
 
-    } catch (err) {
-        return res.status(500).send({ Error: err.message });
-    }
-}
+//     } catch (err) {
+//         return res.status(500).send({ Error: err.message });
+//     }
+// }
 
 const getAll = (model) => async (req, res) => {
     try {
@@ -57,7 +57,7 @@ const deleteOne = (model) => async (req, res) => {
 
 module.exports = (model) => {
   return {
-    post: post(model),
+    // post: post(model),
     getAll: getAll(model),
     getOne: getOne(model),
     updateOne: updateOne(model),
