@@ -7,6 +7,8 @@ const authorise = require("../middlewares/authorise");
 
 const Teacher =require("../models/teacher.model")
 
+// const crudController = require("./crud.controller")
+
 const router= express.Router();
 
 router.post("", authorise(["admin"]), async (req, res) => {
@@ -19,19 +21,16 @@ router.post("", authorise(["admin"]), async (req, res) => {
 	}
 })
 
-router.get("", async (req, res) => {
-	try {
-		const page = req.query.page || 1;
-		const size = req.query.size || 5;
+
+		
 
 		router.get("", async (req, res) => {
 	try {
+		const page = req.query.page || 1;
+		const size = req.query.size || 5;
 	  const teacher = await Teacher.find().skip((page - 1) * size)
       .limit(size)
-	  .populate({path: "teacher_id",
-      populate: [
-        { path: "user_id" },
-      ],}).lean().exec();
+	  .populate({path: "user_id"}).lean().exec()
 
 	  const totalPages = Math.ceil(
 		(await Teacher.find(query).countDocuments()) / size
@@ -42,13 +41,7 @@ router.get("", async (req, res) => {
 	  return res.status(500).send({ message: err.message });
 	}
   });
-	  const teacher = await Teacher.find().populate({path:"user_id"}).lean().exec();
-  
-	  return res.send(teacher);
-	} catch (err) {
-	  return res.status(500).send({ message: err.message });
-	}
-  });
+
 
   router.get("/:gender", async (req, res) => {
 	try {
